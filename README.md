@@ -1,6 +1,8 @@
 # Networking as Code
 An approach and perspective to Networking-As-Code.
 
+![](../assets/the_new_network_stack.png)
+
 In this repo, our main focus is building a simple architecture that allows us to use Python, YAML, and Bash (to an extent) to configure the following:
 
 1. Bare metal switches and routers
