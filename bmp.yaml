@@ -1,0 +1,46 @@
+# cloud-config
+package_update: true
+packages:
+  - curl
+write_files:
+  - path: /root/install_ubuntu.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      
+      # Update the package list
+      apt-get update
+
+      # Install required packages
+      apt-get install -y curl
+
+      # Download the Ubuntu ISO
+      curl -o ubuntu.iso http://releases.ubuntu.com/20.04/ubuntu-20.04.3-live-server-amd64.iso
+
+      # Create a new virtual machine
+      virt-install \
+      --name=ubuntu \
+      --ram=2048 \
+      --vcpus=2 \
+      --disk path=/var/lib/libvirt/images/ubuntu.qcow2,size=10 \
+      --os-type linux \
+      --os-variant ubuntu20.04 \
+      --network bridge=virbr0 \
+      --graphics none \
+      --console pty,target_type=serial \
+      --cdrom ubuntu.iso \
+      --boot cdrom
+
+      # Start the virtual machine
+      virsh start ubuntu
+
+      # Wait for the installation to complete
+      while ! nc -z 127.0.0.1 22; do sleep 1; done
+
+      # Remove the Ubuntu ISO
+      rm -f ubuntu.iso
+
+      echo "Ubuntu installation complete"
+runcmd:
+  - /root/install_ubuntu.sh
+

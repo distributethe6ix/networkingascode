@@ -1,0 +1,16 @@
+interfaces:
+  GigabitEthernet0/0:
+    ip_address: 192.168.1.1/24
+    description: LAN interface
+
+routing:
+  default_route:
+    next_hop: 192.168.1.254
+
+management:
+  ssh:
+    enabled: true
+    authentication:
+      username: admin
+      password: s3cr3t
+

@@ -1,0 +1,21 @@
+switch:
+  hostname: my-switch
+  management_ip: 10.0.0.1
+  management_protocol: netconf
+  management_port: 830
+  username: admin
+  password: s3cr3t
+  config:
+    interfaces:
+      Ethernet1:
+        description: Server interface
+        mode: trunk
+        allowed_vlans:
+          - 10
+          - 20
+          - 30
+      Ethernet2:
+        description: User interface
+        mode: access
+        vlan: 40
+
